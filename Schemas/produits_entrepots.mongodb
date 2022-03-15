@@ -1,0 +1,101 @@
+use('boutiquekc')
+db.createCollection('produits_entrepots', {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["nom", "loc_id", "produit_id", "boutique_id", "quantite_total", "poids_total", "volume_total", "prix_achat", "prix_vente"],
+         properties: {
+            nom: {
+               bsonType: "string",
+               description: "doit être un string -REQUIS"
+            },
+            loc_id: {
+               bsonType: "string",
+               description: "doit être un string -REQUIS"
+            },
+            produit_id: {
+               bsonType: "objectId",
+               description: "doit être un objectId -REQUIS"
+            },
+            boutique_id: {
+               bsonType: "objectId",
+               description: "doit être un objectId -REQUIS"
+            },
+            quantite_total: {
+               bsonType: "object",
+               description: "doit être un object -REQUIS",
+               required: ["type", "type_unite_mesure", "unite_mesure", "nombre"],
+               properties: {
+                  type: {
+                     enum: [ "Portion", "Vrac" ],
+                     description: "doit être une des valeurs proposées -REQUIS"
+                  },
+                  type_unite_mesure: {
+                     enum: ["Unitaire", "Aire", "Masse", "Volume", "Distance","Autres"],
+                     description: "doit être un string"
+                  },
+                  unite_mesure: {
+                     bsonType: "string",
+                     description: "doit être un string"
+                  },
+                  nombre: {
+                     "bsonType": ["decimal", "double", "long", "int"],
+                     description: "doit être un nombre -REQUIS"
+                  }
+               }
+            },
+            poids_total: {
+               bsonType: "object",
+               description: "doit être un object -REQUIS",
+               required: ["unite_mesure", "valeur"],
+               properties: {
+                     unite_mesure: {
+                     bsonType: "string",
+                     description: "doit être un string -REQUIS"
+                  },
+                  valeur: {
+                     "bsonType": ["decimal", "double", "long", "int"],
+                     minimum: 0.00,
+                     description: "doit être un nombre -REQUIS"
+                  }
+               }
+            },
+            volume_total: {
+               bsonType: "object",
+               description: "doit être un object -REQUIS",
+               required: ["unite_mesure", "hauteur", "largeur", "profondeur"],
+               properties: {
+                     unite_mesure: {
+                     bsonType: "string",
+                     description: "doit être un string -REQUIS"
+                  },
+                  hauteur: {
+                     "bsonType": ["decimal", "double", "long", "int"],
+                     minimum: 0.00,
+                     description: "doit être un nombre -REQUIS"
+                  },
+                   largeur: {
+                     "bsonType": ["decimal", "double", "long", "int"],
+                     minimum: 0.00,
+                     description: "doit être un nombre -REQUIS"
+                  },
+                   profondeur: {
+                     "bsonType": ["decimal", "double", "long", "int"],
+                     minimum: 0.00,
+                     description: "doit être un nombre -REQUIS"
+                  }
+               }
+            },
+            prix_achat: {
+               "bsonType": ["decimal", "double", "long", "int"],
+               description: "doit être un nombre -REQUIS"
+            },
+            prix_vente: {
+               "bsonType": ["decimal", "double", "long", "int"],
+               description: "doit être un nombre -REQUIS"
+            }
+         }
+      }
+   }
+});
+

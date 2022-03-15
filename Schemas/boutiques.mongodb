@@ -1,0 +1,22 @@
+use('boutiquekc')
+db.createCollection('boutiques', {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: [ "nom", "categories" ],
+         properties: {
+            nom: {
+               bsonType: "string",
+               description: "doit être un string -REQUIS"
+            },
+            categories: {
+               bsonType: "array",
+               description: "doit être un array -REQUIS"
+            }
+         }
+      }
+   }
+});
+
+
+
